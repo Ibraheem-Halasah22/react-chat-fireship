@@ -7,7 +7,7 @@ import "firebase/compat/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import useFetchMessages from "./hooks/useFetchMessages";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -52,17 +52,16 @@ function ChatRoom() {
   const messages = useFetchMessages();
 
   const [msgInputValue, setMsgInputValue] = useState("");
+  const dummy = useRef();
 
   const sendMessage = async (e) => {
     e.preventDefault();
     const { uid, photoURL } = auth.currentUser;
 
-    const dummy = useRef();
-
     await messagesRef.add({
       text: msgInputValue,
       uid,
-      createdAt: firebase.firestore.FindValue.serverTimestamp(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       photoURL,
     });
     setMsgInputValue("");
