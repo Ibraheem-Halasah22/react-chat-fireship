@@ -6,6 +6,8 @@ import "firebase/compat/firestore";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 
+import useFetchMessages from "./hooks/useFetchMessages";
+
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -45,7 +47,27 @@ function SignOut() {
   );
 }
 function ChatRoom() {
-  return <div>Chat Room</div>;
+  const messages = useFetchMessages();
+  return (
+    <>
+      <div>
+        {messages &&
+          messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+      </div>
+    </>
+  );
+}
+
+function ChatMessage(props) {
+  const { uid, text, photoURL } = props.message;
+  const messageClass = uid === auth.currentUser.uid ? "sent" : "received";
+
+  return (
+    <div className={`message ${messageClass}`}>
+      <img src={photoURL} />
+      <p>{text}</p>
+    </div>
+  );
 }
 
 export default App;

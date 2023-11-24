@@ -2,7 +2,7 @@ import { useState } from "react";
 import { firestore } from "../App";
 import { useEffect } from "react";
 
-function useFetchMessages() {
+export default function useFetchMessages() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
