@@ -27,7 +27,7 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1>⚛️🔥💬</h1>
+        <h1>🔥💬</h1>
         <SignOut />
       </header>
       <section>{user ? <ChatRoom /> : <SignIn />}</section>
@@ -58,12 +58,14 @@ function ChatRoom() {
     e.preventDefault();
     const { uid, photoURL } = auth.currentUser;
 
-    await messagesRef.add({
+    const newMsg = {
       text: msgInputValue,
       uid,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       photoURL,
-    });
+    };
+    const respons = await messagesRef.add(newMsg);
+    console.log(respons);
     dummy.current.scrollIntoView({ behavior: "smooth" });
     setMsgInputValue("");
   };

@@ -7,7 +7,7 @@ export default function useFetchMessages() {
 
   useEffect(() => {
     const messagesRef = firestore.collection("messages");
-    const query = messagesRef.orderBy("createdAt").limit(25);
+    const query = messagesRef.orderBy("createdAt").limitToLast(25);
 
     const unsubscribe = query.onSnapshot((snapshot) => {
       const fetchedMessages = [];
