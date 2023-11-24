@@ -17,7 +17,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
-const firestore = firebase.firestore();
+export const firestore = firebase.firestore();
 
 function App() {
   const [user] = useAuthState(auth);
