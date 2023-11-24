@@ -40,7 +40,9 @@ function SignIn() {
   return <button onClick={signInWithGoogle}>Sign in with Google</button>;
 }
 function SignOut() {
-  return auth.currentUser && <button>Sign out</button>;
+  return (
+    auth.currentUser && <button onClick={() => auth.signOut()}>Sign out</button>
+  );
 }
 function ChatRoom() {
   return <div>Chat Room</div>;
