@@ -7,6 +7,7 @@ import "firebase/compat/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import useFetchMessages from "./hooks/useFetchMessages";
+import { useState } from "react";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -47,13 +48,41 @@ function SignOut() {
   );
 }
 function ChatRoom() {
+  const messagesRef = firestore.collection("messages");
   const messages = useFetchMessages();
+
+  const [msgInputValue, setMsgInputValue] = useState("");
+
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    const { uid, photoURL } = auth.currentUser;
+
+    const dummy = useRef();
+
+    await messagesRef.add({
+      text: msgInputValue,
+      uid,
+      createdAt: firebase.firestore.FindValue.serverTimestamp(),
+      photoURL,
+    });
+    setMsgInputValue("");
+  };
   return (
     <>
       <div>
         {messages &&
           messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+        <div ref={dummy}></div>
       </div>
+      <form onSubmit={sendMessage}>
+        <input
+          value={msgInputValue}
+          onChange={(e) => setMsgInputValue(e.target.value)}
+        />
+        <button type="submit" disabled={!msgInputValue}>
+          🕊️
+        </button>
+      </form>
     </>
   );
 }
