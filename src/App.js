@@ -64,6 +64,7 @@ function ChatRoom() {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       photoURL,
     });
+    dummy.current.scrollIntoView({ behavior: "smooth" });
     setMsgInputValue("");
   };
   return (
