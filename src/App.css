@@ -56,7 +56,7 @@ main::-webkit-scrollbar-thumb {
 
 form {
   height: 10vh;
-  position: fixed;
+  /*position: fixed;*/
   bottom: 0;
   background-color: rgb(24, 23, 23);
   width: 100%;
